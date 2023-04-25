@@ -21,8 +21,9 @@ export default function SignInPage() {
     const body = form
     apiAuth.signIn(body)
     .then(res => {
-      const { userId, name, token} = res.data
-      setUser({userId, name, token})
+      const { userId, username, token} = res.data
+      setUser({userId, username, token})
+      localStorage.setItem("user", JSON.stringify({userId, username, token}))
       navigate("/home")
     }).catch(err => {
       alert(err.response.data)
@@ -49,7 +50,7 @@ export default function SignInPage() {
         value={form.password}
         onChange={handleForm}
         autoComplete="new-password" />
-        <button type="submit" >Entrar</button>
+        <button type="submit">Entrar</button>
       </form>
 
       <Link to="/cadastro">

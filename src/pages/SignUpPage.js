@@ -23,7 +23,6 @@ export default function SignUpPage() {
     const body = {name, email, password}
     apiAuth.signUp(body)
     .then(res => {
-      console.log(res.data)
       navigate("/")
     }).catch(err => {
       alert(err.response.data)
