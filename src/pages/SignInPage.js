@@ -8,8 +8,6 @@ import { UserContext } from "../contexts/userContext"
 export default function SignInPage() {
   const navigate = useNavigate()
 
-  const [loading, setLoading] = useState(false)
-
   const {setUser} = useContext(UserContext)
 
   const [form, setForm] = useState({email: "", password: ""})
@@ -21,15 +19,12 @@ export default function SignInPage() {
   function handleSignIn(e) {
     e.preventDefault()
     const body = form
-    setLoading(true)
     apiAuth.signIn(body)
     .then(res => {
-      setLoading(false)
       const { userId, name, token} = res.data
       setUser({userId, name, token})
       navigate("/home")
     }).catch(err => {
-      setLoading(false)
       alert(err.response.data)
       setForm({...form, password: ""})
     })
@@ -44,8 +39,7 @@ export default function SignInPage() {
         placeholder="E-mail" 
         required
         value={form.email}
-        onChange={handleForm}
-        disabled={loading}
+        onChange={handleForm} 
         type="email" />
         <input 
         name="password" 
@@ -54,9 +48,8 @@ export default function SignInPage() {
         required
         value={form.password}
         onChange={handleForm}
-        disabled={loading}
         autoComplete="new-password" />
-        <button type="submit" disabled={loading}>Entrar</button>
+        <button type="submit" >Entrar</button>
       </form>
 
       <Link to="/cadastro">
